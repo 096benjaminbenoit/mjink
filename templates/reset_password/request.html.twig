@@ -1,22 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}MJ INK | Réinitialiser votre mot de passe{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
-
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Enter your email address and we will send you a
-                link to reset your password.
-            </small>
+        <div class="flex p-4 text-sm text-red-800 border border-red-300 bg-red-50" role="alert">
+          <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+          <span class="sr-only">Info</span>
+          <div>
+            <span class="font-medium">{{ flash_error }}</span>
+          </div>
         </div>
+    {% endfor %}
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+<section class="bg-gray-50 h-screen">
+  <div class="flex flex-col items-center px-6 py-8 mx-auto md:h-screen">
+    <h1 class="font-light text-center font-serif text-3xl mb-10">MJ INK' TATTOO & BARBER</h1>
+      <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+                  Réinitialiser votre mot de passe
+              </h1>
+                  <p class="text-sm font-light text-gray-500 text-center">
+                      Nous vous envoyons un lien de réinitialisation par mail
+                  </p>
+                {{ form_start(requestForm, {'attr': {'class': 'space-y-4 md:space-y-6'}}) }}
+                  <div>
+                      <label for="inputEmail" class="block mb-2 text-sm font-medium text-gray-900 ">Votre adresse mail</label>
+                    {{ form_widget(requestForm.email, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
+                  </div>
+                  <button type="submit" class="w-full text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-900 hover:bg-gray-950">Réinitialiser</button>
+              {{ form_end(requestForm) }}
+          </div>
+      </div>
+  </div>
+</section>
 {% endblock %}

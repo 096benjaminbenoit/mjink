@@ -1,6 +1,6 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-    form_themes: ['formtheme/formerror.html.twig']
+    form_themes: ['formThemes/formErrors.twig']
 
 when@test:
     twig:
