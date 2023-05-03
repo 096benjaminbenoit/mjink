@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Appointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
 
 /**
  * @extends ServiceEntityRepository<Appointment>
@@ -16,9 +17,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AppointmentRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $security;
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, Appointment::class);
+        $this->security = $security;
     }
 
     public function save(Appointment $entity, bool $flush = false): void
@@ -37,6 +40,23 @@ class AppointmentRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findUpcomingAppointmentsForClient()
+    {
+        $now = new \DateTime();
+        $thisClient = $this->security->getUser()->getClient();
+
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->where('a.client = :clientId')
+            ->andWhere('a.start >= :now')
+            ->setParameter('clientId', $thisClient->getId())
+            ->setParameter('now', $now)
+            ->orderBy('a.start', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery();
+
+        return $queryBuilder->getOneOrNullResult();
     }
 
 //    /**
