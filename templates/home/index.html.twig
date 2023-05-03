@@ -1,17 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+
+{% block title %}MJ INK | Votre profil{% endblock %}
 
 {% block body %}
-    <h1>Bonjour {{ user.firstName }},</h1>
-    {% if upcomingAppointment == null %}
-        <p>Vous n'avez pas de rendez-vous prévu</p>
-        <a href="#">Prendre rendez-vous</a>
-    {% else %}
-        <p>Vous avez rendez-vous le : {{ upcomingAppointment.start|date('d/m/Y à H:i') }}</p>
-        <p>{{ upcomingAppointment.service.name }} avec {{ upcomingAppointment.employee.firstName }}</p>
-    {% endif %}
-    <a href="{{ path('app_logout') }}">Déconnexion</a>
-    <a href="#">Modifier mes informations personnelles</a>
-    <a href="{{ path("app_logout") }}">Déconnexion</a>
+<section class="bg-gray-50">
+  <div class="flex flex-col items-center px-6 py-8 mx-auto md:h-screen">
+    <h1 class="font-light text-center font-serif text-3xl mb-10"><a href="{{ path('app_home') }}">MJ INK' TATTOO & BARBER</a></h1>
+      <div class="w-full lg:w-2/3 bg-white rounded-lg shadow md:pb-10">
+        <button class="p-5 md:hidden absolute" id="navBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+            </svg>        
+        </button>
+
+        {% include 'components/nav.html.twig' %}
+
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+                  Bonjour {{ user.firstName }},
+              </h2>
+              <div class="space-y-5 flex flex-col justify-center items-center">
+                {% if upcomingAppointment == null %}
+                    <p>Actuellement, vous n'avez pas de rendez-vous prévu</p>
+                    <a href="#" type="submit" class="w-1/2 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-900 hover:bg-gray-950">Prendre rendez-vous</a>
+                {% else %}
+                    <p>Récapitulatif de votre prochain rendez-vous :</p>
+                    <span class="text-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full md:w-1/2 p-2.5">{{ upcomingAppointment.start|date('d/m/Y à H:i') }}</span>
+                    <span class="text-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full md:w-1/2 p-2.5">{{ upcomingAppointment.service.name }}</span>
+                    <span class="text-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full md:w-1/2 p-2.5">{{ upcomingAppointment.employee.firstName }}</span>
+                    <a href="#" class="w-full md:w-1/2 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-900 hover:bg-gray-950">Modifier mon rendez-vous</a>
+                {% endif %}
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
 {% endblock %}
