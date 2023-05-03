@@ -27,18 +27,27 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('firstName', TextType::class, [
                 'required' => true,
+                'trim' => true,
                 'attr' => [
-                    'placeholder' => 'John'
-                ]
+                    'placeholder' => 'John',
+                ],
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[^\s]+$/',
+                        'message' => 'Le champs ne peut pas contenir d\'espaces.',
+                    ])
+                ]           
             ])
             ->add('lastName', TextType::class, [
                 'required' => true,
+                'trim' => true,
                 'attr' => [
                     'placeholder' => 'Doe'
                 ]
             ])
             ->add('phone', TelType::class, [
                 'required' => true,
+                'trim' => true,
                 'attr' => [
                     'placeholder' => '0123456789'
                 ],
@@ -51,7 +60,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'placeholder' => 'john@exemple.fr'
+                    'placeholder' => 'john@exemple.fr',
+                    'trim' => true,
                 ],
                 'constraints' => [
                     new Email([
@@ -72,6 +82,7 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'trim' => true,
                 'attr' => [
                     'autocomplete' => 'new-password',
                     'placeholder' => '8 caractères minimum'
