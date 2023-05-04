@@ -52,10 +52,10 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => '0123456789'
                 ],
                 'constraints' => [
-                    new Regex(array(
+                    new Regex([
                         'pattern' => '/^(0|\+33)[1-9]( *[0-9]{2}){4}$/',
                         'message' => 'Veuillez saisir un numéro de téléphone valide'
-                    ))
+                    ])
                 ]
             ])
             ->add('email', EmailType::class, [

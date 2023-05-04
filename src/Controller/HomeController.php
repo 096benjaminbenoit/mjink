@@ -18,13 +18,19 @@ class HomeController extends AbstractController
         }
 
         $user = $this->getUser();
+        $client = $user->getClient();
         $upcomingAppointment = $appointmentRepository->findUpcomingAppointmentsForClient();
-        // dd($upcomingAppointment);
-        
+
+        $allAppointments = $appointmentRepository->findBy(
+            ['client' => $client],
+            ['id' => 'ASC']
+        );
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'user' => $user,
-            'upcomingAppointment' => $upcomingAppointment
+            'upcomingAppointment' => $upcomingAppointment,
+            'allAppointments' => $allAppointments
         ]);
     }
 }

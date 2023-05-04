@@ -37,6 +37,11 @@ class Service
     #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'service')]
     private Collection $clients;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function __construct()
     {
         $this->appointments = new ArrayCollection();

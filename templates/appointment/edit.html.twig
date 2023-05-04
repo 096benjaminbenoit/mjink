@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MJ INK | Nouveau rendez-vous{% endblock %}
+
+{% block body %}
+<section class="bg-gray-50">
+  <div class="flex flex-col items-center px-6 py-8 mx-auto md:h-screen">
+    <h1 class="font-light text-center font-serif text-3xl mb-10"><a href="{{ path('app_home') }}">MJ INK' TATTOO & BARBER</a></h1>
+      <div class="w-full lg:w-2/3 bg-white rounded-lg shadow md:pb-10">
+        <button class="p-5 md:hidden absolute" id="navBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+            </svg>        
+        </button>
+
+        {% include 'components/nav.html.twig' %}
+
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+                  Nouveau rendez-vous
+              </h2>
+                {{ form_start(form, {'attr': {'class': 'flex flex-col gap-3'}}) }}
+                    <label for="form.service">Choissisez une prestation :</label>
+                    {{ form_widget(form.service, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
+
+                    <label for="form.employee">Choissisez votre coiffeur / coiffeuse</label>
+                    {{ form_widget(form.employee, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
+                    
+                    <label for="form.start">Choissisez votre créneau horaire</label>
+                    {{ form_widget(form.start, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
+
+                    {# <label for="form.end">Choissisez votre créneau horaire</label>
+                    {{ form_widget(form.end, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
+                     #}
+                    <button type="submit" class="mt-3 w-full text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-900 hover:bg-gray-950">Confirmer</button>
+                {{ form_end(form) }}
+          </div>
+      </div>
+  </div>
+</section>
+
+{% endblock %}
