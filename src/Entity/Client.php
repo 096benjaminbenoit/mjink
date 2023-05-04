@@ -33,6 +33,10 @@ class Client
     #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'clients')]
     private Collection $service;
 
+    public function __toString()
+    {
+        return $this->first_name;
+    }
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
