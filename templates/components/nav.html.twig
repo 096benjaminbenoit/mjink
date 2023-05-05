@@ -1,39 +1,19 @@
 <nav class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 hidden md:block" id="dropDownNav">
             <ul class="lg:flex md:flex lg:flex-wrap md:flex-wrap -mb-px">
                 <li class="mr-2">
-                    <a href="{{ path('app_home') }}" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Mes rendez-vous</a>
+                    <a href="{{ path('app_home') }}" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300">Mes rendez-vous</a>
                 </li>
                 <li class="mr-2">
-                    <a href="{{ path('app_user') }}" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Mes informations</a>
+                    <a href="{{ path('app_user') }}" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300">Mes informations</a>
                 </li>
                 <li class="mr-2">
-                    <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Les prestations</a>
+                    <a href="#" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300">Les prestations</a>
                 </li>
                 <li class="mr-2">
-                    <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">L'équipe</a>
+                    <a href="#" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300">L'équipe</a>
                 </li>
                 <li class="mr-2">
-                    <a href="{{ path('app_logout') }}" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-red-500 hover:border-red-300">Me déconnecter</a>
+                    <a href="{{ path('app_logout') }}" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-red-500 hover:border-red-300">Me déconnecter</a>
                 </li>
             </ul>
         </nav>
-
-<script>
-    const navBtn = document.getElementById('navBtn');
-    const dropDownNav = document.getElementById('dropDownNav');
-    navBtn.addEventListener("click", () => {
-    if (dropDownNav.classList.contains('hidden')) {
-      dropDownNav.classList.remove('hidden');
-    } else {
-      dropDownNav.classList.add('hidden');
-    }
-  });
-
-    const activePage = window.location.pathname;
-    const navLinks = document.querySelectorAll('nav a').forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('text-gray-900');
-            link.classList.add('border-gray-900')
-        }
-    })
-</script>
