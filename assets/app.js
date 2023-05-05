@@ -12,3 +12,4 @@ import './styles/app.css';
 import './bootstrap';
 
 import './nav';
+import './ajaxAppointment';
