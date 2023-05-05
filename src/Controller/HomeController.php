@@ -111,16 +111,4 @@ class HomeController extends AbstractController
             'allAppointments' => $allAppointments
         ]);
     }
-
-    #[Route('/{id}', name: 'app_appointment_remove', methods: ['GET', 'POST'])]
-    public function remove(Request $request, Appointment $appointment, EntityManagerInterface $entityManager, AppointmentRepository $appointmentRepository): Response
-    {
-        if ($this->getUser() == null) {
-            return $this->redirectToRoute('app_login');
-        }
-
-            $appointmentRepository->remove($appointment, true);
-
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-        }
-    }
+}
