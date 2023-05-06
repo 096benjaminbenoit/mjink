@@ -4,18 +4,20 @@
 
 {% block body %}
 <section class="bg-gray-50">
-  <div class="flex flex-col items-center px-6 py-8 mx-auto md:h-screen">
-    <h1 class="font-light text-center font-serif text-3xl mb-10"><a href="{{ path('app_home') }}">MJ INK' TATTOO & BARBER</a></h1>
-      <div class="w-full lg:w-2/3 bg-white rounded-lg shadow md:pb-10">
-        <button class="p-5 md:hidden absolute" id="burgerBtn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
-            </svg>        
-        </button>
+    <div class="flex flex-col justify-items-center px-6 py-8 mx-auto md:h-screen">
+        <div class="flex justify-between md:justify-center items-center mb-5 mx-5">
+            <h1 class="font-light font-serif text-md sm:text-lg lg:text-3xl"><a href="{{ path('app_home') }}">MJ INK' TATTOO & BARBER</a></h1>
+            <button class="md:hidden" id="burgerBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                </svg>        
+            </button>
+        </div>
+      <div class="w-full bg-white rounded-lg shadow md:pb-10">
 
         {% include 'components/nav.html.twig' %}
 
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8 md:w-3/4 mx-auto">
               <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
                   Mes informations
               </h2>
@@ -25,9 +27,6 @@
 
                     <label for="form.last_name">Votre nom :</label>
                     {{ form_widget(form.last_name, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
-                    
-                    {# <label for="form.password">Votre mot de passe actuel</label> #}
-                    {# {{ form_widget(form.password, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }} #}
 
                     <label for="form.phone">Votre numéro de téléphone :</label>
                     {{ form_widget(form.phone, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
