@@ -20,18 +20,15 @@
                   Nouveau rendez-vous
               </h2>
                 {{ form_start(form, {'attr': {'class': 'flex flex-col gap-3'}}) }}
-                    <label for="form.service">Choissisez une prestation :</label>
+                    <label for="form.service">Choisissez une prestation :</label>
                     {{ form_widget(form.service, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
 
-                    <label for="form.employee">Choissisez votre coiffeur / coiffeuse</label>
+                    <label for="form.employee">Choisissez votre coiffeur / coiffeuse</label>
                     {{ form_widget(form.employee, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
                     
-                    <label for="form.start">Choissisez votre créneau horaire</label>
+                    <label for="form.start">Choisissez votre créneau horaire</label>
                     {{ form_widget(form.start, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
-
-                    {# <label for="form.end">Choissisez votre créneau horaire</label>
-                    {{ form_widget(form.end, {'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'}}) }}
-                     #}
+                    
                     <button type="submit" class="mt-3 w-full text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gray-900 hover:bg-gray-950">Confirmer</button>
                 {{ form_end(form) }}
           </div>
