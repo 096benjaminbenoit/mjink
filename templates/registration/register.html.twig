@@ -7,10 +7,11 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 <section class="bg-gray-50 w-screen h-screen">
-    <h1 class="font-light text-center font-serif text-3xl pt-8 mb-10"><a href="{{ path('app_home') }}">MJ INK' TATTOO & BARBER</a></h1>
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center pb-4 md:pb-6">Inscrivez-vous</h2>
-        {{ form_start(registrationForm, {'attr': {'class': 'space-y-4 md:space-y-6'}})}}
+    <div class="flex flex-col items-center px-6 py-8 mx-auto">
+      <h1 class="font-light font-serif text-md sm:text-lg lg:text-3xl mb-5"><a href="{{ path('app_home') }}">MJ INK' TATTOO & BARBER</a></h1>
+        <div class="w-full md:w-3/4 lg:w-2/4 mx-auto bg-white p-8 rounded-lg shadow">
+            <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center pb-4 md:pb-6">Inscrivez-vous</h2>
+            {{ form_start(registrationForm, {'attr': {'class': 'space-y-4 md:space-y-6'}})}}
             <div class="grid gap-6 mb-6 lg:grid-cols-2">
                 <div>
                     {{ form_label(registrationForm.firstName, 'Votre prénom', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900'}}) }}
@@ -62,7 +63,8 @@
             <p class="text-sm font-light text-gray-500">
                 Vous avez déjà un compte ? <a href="{{ path('app_login') }}" class="font-medium text-primary-600 hover:underline">Connectez-vous</a>
             </p>
-        {{ form_end(registrationForm)}}
+            {{ form_end(registrationForm)}}
+        </div>
     </div>
 </section>
 
