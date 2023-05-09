@@ -34,8 +34,8 @@ class Service
     #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'services')]
     private Collection $employee;
 
-    #[ORM\ManyToMany(targetEntity: Client::class, mappedBy: 'service')]
-    private Collection $clients;
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: ClientService::class)]
+    private Collection $clientServices;
 
     public function __toString()
     {
@@ -46,7 +46,7 @@ class Service
     {
         $this->appointments = new ArrayCollection();
         $this->employee = new ArrayCollection();
-        $this->clients = new ArrayCollection();
+        $this->clientServices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,27 +157,30 @@ class Service
     }
 
     /**
-     * @return Collection<int, Client>
+     * @return Collection<int, ClientService>
      */
-    public function getClients(): Collection
+    public function getClientServices(): Collection
     {
-        return $this->clients;
+        return $this->clientServices;
     }
 
-    public function addClient(Client $client): self
+    public function addClientService(ClientService $clientService): self
     {
-        if (!$this->clients->contains($client)) {
-            $this->clients->add($client);
-            $client->addService($this);
+        if (!$this->clientServices->contains($clientService)) {
+            $this->clientServices->add($clientService);
+            $clientService->setService($this);
         }
 
         return $this;
     }
 
-    public function removeClient(Client $client): self
+    public function removeClientService(ClientService $clientService): self
     {
-        if ($this->clients->removeElement($client)) {
-            $client->removeService($this);
+        if ($this->clientServices->removeElement($clientService)) {
+            // set the owning side to null (unless already changed)
+            if ($clientService->getService() === $this) {
+                $clientService->setService(null);
+            }
         }
 
         return $this;

@@ -30,8 +30,8 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Appointment::class)]
     private Collection $appointments;
 
-    #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'clients')]
-    private Collection $service;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ClientService::class)]
+    private Collection $clientServices;
 
     public function __toString()
     {
@@ -40,7 +40,7 @@ class Client
     public function __construct()
     {
         $this->appointments = new ArrayCollection();
-        $this->service = new ArrayCollection();
+        $this->clientServices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,25 +127,31 @@ class Client
     }
 
     /**
-     * @return Collection<int, Service>
+     * @return Collection<int, ClientService>
      */
-    public function getService(): Collection
+    public function getClientServices(): Collection
     {
-        return $this->service;
+        return $this->clientServices;
     }
 
-    public function addService(Service $service): self
+    public function addClientService(ClientService $clientService): self
     {
-        if (!$this->service->contains($service)) {
-            $this->service->add($service);
+        if (!$this->clientServices->contains($clientService)) {
+            $this->clientServices->add($clientService);
+            $clientService->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeService(Service $service): self
+    public function removeClientService(ClientService $clientService): self
     {
-        $this->service->removeElement($service);
+        if ($this->clientServices->removeElement($clientService)) {
+            // set the owning side to null (unless already changed)
+            if ($clientService->getClient() === $this) {
+                $clientService->setClient(null);
+            }
+        }
 
         return $this;
     }
