@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Appointment;
 use App\Form\AppointmentFormType;
+use App\Repository\ClientServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController
@@ -38,16 +39,16 @@ class HomeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_appointment')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ClientServiceRepository $clientServiceRepository): Response
     {
         if ($this->getUser() == null) {
             return $this->redirectToRoute('app_login');
         }
         
         $user = $this->getUser();
-        
+        $client = $user->getClient();
         $appointment = new Appointment();
-        $appointment->setClient($user->getClient());
+        $appointment->setClient($client);
         
         $form = $this->createForm(AppointmentFormType::class, $appointment);
         $form->handleRequest($request);
@@ -55,7 +56,10 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $service = $appointment->getService();
-            $serviceDuration = $service->getDuration();
+            $defaultServiceDuration = $service->getDuration();
+            $customServiceDuration = $clientServiceRepository->getServiceDurationFromClient($client, $service);
+
+            $serviceDuration = ($customServiceDuration !== null) ? $customServiceDuration : $defaultServiceDuration;
             $startAt = $appointment->getStart();
 
             $endAt = clone $startAt;
@@ -75,7 +79,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Appointment $appointment, EntityManagerInterface $entityManager, AppointmentRepository $appointmentRepository): Response
+    public function edit(Request $request, Appointment $appointment, EntityManagerInterface $entityManager, AppointmentRepository $appointmentRepository, ClientServiceRepository $clientServiceRepository): Response
     {
         if ($this->getUser() == null) {
             return $this->redirectToRoute('app_login');
@@ -94,7 +98,10 @@ class HomeController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $service = $appointment->getService();
-            $serviceDuration = $service->getDuration();
+            $defaultServiceDuration = $service->getDuration();
+            $customServiceDuration = $clientServiceRepository->getServiceDurationFromClient($client, $service);
+
+            $serviceDuration = ($customServiceDuration !== null) ? $customServiceDuration : $defaultServiceDuration;
             $startAt = $appointment->getStart();
 
             $endAt = clone $startAt;
