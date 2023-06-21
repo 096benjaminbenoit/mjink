@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ServiceController!{% endblock %}
+
+{% block body %}
+
+<section class="bg-gray-50">
+    <div class="flex flex-col justify-items-center px-6 py-8 mx-auto md:h-screen">
+        <div class="flex justify-between md:justify-center items-center mb-5 mx-5">
+            <h1 class="font-light font-serif text-md sm:text-lg lg:text-3xl"><a href="{{ path('app_home') }}">MJ INK' TATTOO & BARBER</a></h1>
+            <button class="md:hidden" id="burgerBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                </svg>        
+            </button>
+        </div>
+        <div class="w-full bg-white rounded-lg shadow md:pb-10">
+
+        {% include 'components/nav.html.twig' %}
+
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8 md:w-3/4 mx-auto">
+            <h2 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+                Les prestations
+            </h2>
+
+            <div id="accordion-collapse" data-accordion="collapse">
+                {% for service in allServices %}
+                    <button type="button" class="flex items-center mt-5 justify-between w-full rounded-lg p-5 font-medium text-left text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200" data-accordion-target="#accordion-collapse-body-{{ loop.index }}" aria-expanded="false" aria-controls="accordion-collapse-body-{{ loop.index }}">
+                        <span>{{ service.name }}</span>
+                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                <div id="accordion-collapse-body-{{ loop.index }}" class="hidden" aria-labelledby="accordion-collapse-heading-{{ loop.index }}">
+                    <div class="p-5 border border-t-0 border-gray-200 rounded-b-lg">
+                        <p class="mb-2 text-gray-500">{{ service.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

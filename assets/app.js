@@ -13,3 +13,4 @@ import './bootstrap';
 
 import './nav';
 import './ajaxAppointment';
+import 'flowbite';
