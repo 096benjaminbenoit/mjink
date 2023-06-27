@@ -22,11 +22,11 @@ class AppointmentFormType extends AbstractType
             ->add('service', EntityType::class, [
                 'class' => Service::class,
                 'placeholder' => 'Choisir une prestation',
-            ])
-            ->add('start', DateTimeType::class, [
-                'widget' => 'single_text',
-                'required' => true,
             ]);
+            // ->add('start', DateTimeType::class, [
+            //     'widget' => 'single_text',
+            //     'required' => true,
+            // ]);
 
         $formModifier = function (FormInterface $form, Service $service = null) {
             $employees = null === $service ? [] : $service->getEmployee();

@@ -10,13 +10,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Appointment;
 use App\Form\AppointmentFormType;
 use App\Repository\ClientServiceRepository;
+use App\Service\AvailabilityTimeSlot;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(Request $request, AppointmentRepository $appointmentRepository): Response
+    private $availabilityTimeSlot;
+
+    public function __construct(AvailabilityTimeSlot $availabilityTimeSlot)
     {
+        $this->availabilityTimeSlot = $availabilityTimeSlot;
+    }
+
+    #[Route('/', name: 'app_home')]
+    public function index(AppointmentRepository $appointmentRepository): Response
+    {
+        // $employeeId = 2;
+        // $now = new DateTime();
+        // $dayOfWeek = $now->format('w');
+        // $duration = 20;
+        // $slots = $this->availabilityTimeSlot->getAvailableSlots($employeeId, $dayOfWeek, $duration);
+        // dd($slots);
+
+
         if ($this->getUser() == null) {
             return $this->redirectToRoute('app_login');
         }
@@ -53,6 +70,8 @@ class HomeController extends AbstractController
         $form = $this->createForm(AppointmentFormType::class, $appointment);
         $form->handleRequest($request);
 
+        $slots = [];
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $service = $appointment->getService();
@@ -60,21 +79,29 @@ class HomeController extends AbstractController
             $customServiceDuration = $clientServiceRepository->getServiceDurationFromClient($client, $service);
 
             $serviceDuration = ($customServiceDuration !== null) ? $customServiceDuration : $defaultServiceDuration;
-            $startAt = $appointment->getStart();
+            // $startAt = $appointment->getStart();
 
-            $endAt = clone $startAt;
-            $endAt->add(new \DateInterval('PT' . $serviceDuration . 'M'));
-            $appointment->setEnd($endAt);
+            // $endAt = clone $startAt;
+            // $endAt->add(new \DateInterval('PT' . $serviceDuration . 'M'));
+            // $appointment->setEnd($endAt);
 
-            $entityManager->persist($appointment);
-            $entityManager->flush();
+            $employeeId = $appointment->getEmployee()->getId();
+            $now = new DateTime();
+            $dayOfWeek = $now->format('w');
 
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            $slots = $this->availabilityTimeSlot->getAvailableSlots($employeeId, $dayOfWeek, $serviceDuration);
+            // dd($slots);
+
+            // $entityManager->persist($appointment);
+            // $entityManager->flush();
+            
+            // return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('home/new.html.twig', [
             'controller_name' => 'AppointmentController',
-            'form' => $form
+            'form' => $form,
+            'slots' => $slots
         ]);
     }
 
@@ -129,4 +156,5 @@ class HomeController extends AbstractController
 
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
+
 }
