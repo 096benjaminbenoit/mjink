@@ -23,9 +23,6 @@ class Availability
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $end_at = null;
 
-    #[ORM\Column]
-    private ?bool $is_working = null;
-
     #[ORM\ManyToOne(inversedBy: 'availabilities')]
     private ?Employee $employee = null;
 
@@ -66,18 +63,6 @@ class Availability
     public function setEndAt(\DateTimeInterface $end_at): self
     {
         $this->end_at = $end_at;
-
-        return $this;
-    }
-
-    public function isIsWorking(): ?bool
-    {
-        return $this->is_working;
-    }
-
-    public function setIsWorking(bool $is_working): self
-    {
-        $this->is_working = $is_working;
 
         return $this;
     }

@@ -35,7 +35,7 @@ class Client
 
     public function __toString()
     {
-        return $this->first_name;
+        return $this->fullname;
     }
     public function __construct()
     {

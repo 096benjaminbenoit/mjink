@@ -1,0 +1,66 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{# {% block page_actions %}
+    <a class="btn btn-primary" href="http://127.0.0.1:8000/admin?crudAction=new&crudControllerFqcn=App%5CController%5CAdmin%5CAppointmentCrudController&referrer=http://127.0.0.1:8000/admin?crudAction%3Dindex%26crudControllerFqcn%3DApp%255CController%255CAdmin%255CAppointmentCrudController"><i class="fa-solid fa-plus pe-2"></i>Nouveau rendez-vous</a>
+{% endblock %} #}
+
+{% block main %}
+<div id="calendar"></div>
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js'></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            nowIndicator: true,
+            allDaySlot: false,
+            slotMinTime: '09:30:00',
+            slotMaxTime: '19:00:00',
+            slotDuration: '00:15:00',
+            hiddenDays: [0, 1],
+            firstDay: 1,
+            locale: 'fr',
+            headerToolbar: {
+            start: 'prev today next',
+            center: 'title',
+            end: 'timeGridDay,timeGridWeek,dayGridMonth,list',
+            },
+            buttonText: {
+            today: 'Aujourd\'hui',
+            month: 'Mois',
+            week: 'Semaine',
+            day: 'Jour',
+            list: 'Liste'
+            },
+            events: {{ data|raw }}
+            });
+        calendar.render();
+    });
+</script>
+
+<style>
+    .fc-timegrid-event-harness {
+        width: 33%;
+    }
+
+    .content-header {
+        display: none;
+    }
+
+    #calendar {
+        margin-top: 10px;
+    }
+
+    :root {
+        --fc-button-text-color: #fff;
+        --fc-button-bg-color: #5368D5;
+        --fc-button-border-color: #5368D5;
+        --fc-button-hover-bg-color: #2f42a5;
+        --fc-button-hover-border-color: #2f42a5;
+        --fc-button-active-bg-color: #2f42a5;
+        --fc-button-active-border-color: #2f42a5;
+    }
+</style>
+
+{% endblock %}
