@@ -11,17 +11,24 @@ use App\Entity\Appointment;
 use App\Form\AppointmentFormType;
 use App\Repository\ClientServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, AppointmentRepository $appointmentRepository): Response
+    public function index(Request $request, AppointmentRepository $appointmentRepository, Security $security): Response
     {
         if ($this->getUser() == null) {
             return $this->redirectToRoute('app_login');
         }
-
+   
         $user = $this->getUser();
+        
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return $this->redirectToRoute('app_admin');
+        }
+
         $client = $user->getClient();
         $upcomingAppointment = $appointmentRepository->findUpcomingAppointmentsForClient();
 
@@ -39,13 +46,18 @@ class HomeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_appointment')]
-    public function new(Request $request, EntityManagerInterface $entityManager, ClientServiceRepository $clientServiceRepository): Response
+    public function new(Security $security, Request $request, EntityManagerInterface $entityManager, ClientServiceRepository $clientServiceRepository): Response
     {
         if ($this->getUser() == null) {
             return $this->redirectToRoute('app_login');
         }
         
         $user = $this->getUser();
+
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return $this->redirectToRoute('app_admin');
+        }
+
         $client = $user->getClient();
         $appointment = new Appointment();
         $appointment->setClient($client);
@@ -79,13 +91,18 @@ class HomeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Appointment $appointment, EntityManagerInterface $entityManager, AppointmentRepository $appointmentRepository, ClientServiceRepository $clientServiceRepository): Response
+    public function edit(Security $security, Request $request, Appointment $appointment, EntityManagerInterface $entityManager, AppointmentRepository $appointmentRepository, ClientServiceRepository $clientServiceRepository): Response
     {
         if ($this->getUser() == null) {
             return $this->redirectToRoute('app_login');
         }
 
         $user = $this->getUser();
+
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return $this->redirectToRoute('app_admin');
+        }
+        
         $client = $user->getClient();
 
         $allAppointments = $appointmentRepository->findBy(
@@ -119,7 +136,7 @@ class HomeController extends AbstractController
         ]);
     }
     #[Route('/{id}/remove', name: 'app_appointment_remove', methods: ['GET', 'POST'])]
-    public function remove(Request $request, Appointment $appointment, EntityManagerInterface $entityManager, AppointmentRepository $appointmentRepository): Response
+    public function remove(Security $security, Request $request, Appointment $appointment, EntityManagerInterface $entityManager, AppointmentRepository $appointmentRepository): Response
     {
         if ($this->getUser() == null) {
             return $this->redirectToRoute('app_login');
